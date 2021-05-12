@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  web:
+    image: php:7.2-apache
+    depends_on: 
+      - apipython
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./website:/var/www/html
+    environment:
+      - USERNAME=toto
+      - PASSWORD=python
+    networks:
+      - website_api
+   
+  apipython:
+    image: 1326sj/api.python:v2
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./simple-api/student_age.json:/data/student_age.json
+networks:
+  website_api:
